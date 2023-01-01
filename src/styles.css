@@ -5,5 +5,15 @@
 } */
 
 body {
-  background: #343a40;
+  background: #e0e0e0;
+  min-height: 100vh !important;
+}
+
+footer {
+
+  margin-top: 24px;
+  /* position: absolute;
+  bottom: 0px;
+  right: 0px;
+  left: 0px; */
 }
