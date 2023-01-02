@@ -31,11 +31,11 @@ const Home = () => {
     <ChakraProvider>
       <Base title="Home Page" description="Welcome to our Home Page!">
         <Heading ml={8}>All Products:</Heading>
-        <Grid templateColumns={{md:"repeat(3, 1fr)"}} py={3}>
+        <Grid templateColumns={{ md: 'repeat(4, 1fr)' }} py={3}>
           {products.map((product, index) => {
             return (
-              <GridItem w="100%" align="center">
-                <ProductCard product={product}/>
+              <GridItem key={index} w="90%" align="center" ml="auto" mr="auto">
+                <ProductCard product={product} />
               </GridItem>
             );
           })}

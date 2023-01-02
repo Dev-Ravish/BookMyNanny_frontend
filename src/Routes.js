@@ -7,7 +7,7 @@ import ManageProducts from './admin/ManageProducts';
 import UpdateProduct from './admin/UpdateProduct';
 import AdminRoutes from './auth/helper/AdminRoutes';
 import PrivateRoutes from './auth/helper/PrivateRoutes';
-
+import Cart from './core/Cart';
 import Home from './core/Home';
 import AdminDashBoard from './user/AdminDashBoard';
 import Signin from './user/Signin';
@@ -22,6 +22,7 @@ const Routers = () => {
           <Route path="/" exact element={<Home />} />
           <Route path="/signin" exact element={<Signin />} />
           <Route path="/signup" exact element={<Signup />} />
+          <Route path="/cart" exact element={<Cart />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/user/dashboard" exact element={<UserDashBoard />} />
           </Route>

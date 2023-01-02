@@ -9,18 +9,41 @@ import {
   ButtonGroup,
   Button,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { addItemToCart, removeProductFromCart } from './helper/cartHelper';
 import Imagecalls from './helper/Imagecalls';
-const ProductCard = ({product}) => {
+
+const ProductCard = ({
+  product,
+  showAddToCart = true,
+  showRemoveFromCart = false,
+  setReload = (value) => value,
+  reload,
+}) => {
+  const [redirect, setRedirect] = useState(false);
+
+  const [count, setCount] = useState();
+  const addToCart = () => {
+    addItemToCart(product, () => {
+      setCount(product.count);
+      setRedirect(true);
+    });
+  };
+  const getRedirected = () => {
+    if (redirect) {
+      return <Navigate to="/cart" />;
+    }
+  };
+
   return (
     <Card maxW="sm" height="100%">
+      {getRedirected()}
       <CardBody>
         <Imagecalls product={product} />
         <Stack mt="6" spacing="3">
           <Heading size="md">{product.name}</Heading>
-          <Text>
-            {product.description}
-          </Text>
+          <Text>{product.description}</Text>
           <Text color="blue.600" fontSize="2xl">
             {product.price}
           </Text>
@@ -28,14 +51,23 @@ const ProductCard = ({product}) => {
       </CardBody>
       <Divider />
       <CardFooter>
-        <ButtonGroup spacing="2">
-          <Button variant="solid" colorScheme="blue">
-            Buy now
-          </Button>
-          <Button variant="ghost" colorScheme="blue">
+        {showAddToCart && (
+          <Button colorScheme="teal" w="100%" onClick={addToCart}>
             Add to cart
           </Button>
-        </ButtonGroup>
+        )}
+        {showRemoveFromCart && (
+          <Button
+            colorScheme="red"
+            w="100%"
+            onClick={() => {
+              removeProductFromCart(product._id);
+              setReload(!reload)
+            }}
+          >
+            Remove From Cart
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
