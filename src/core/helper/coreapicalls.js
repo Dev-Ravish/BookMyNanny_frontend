@@ -8,3 +8,10 @@ export const getProducts = () => {
       .catch((err) => console.log(err));
   };
   
+  export const getNannies = () => {
+    return fetch(`${API}/nannies`)
+      .then((response) => {
+        return response.json();
+      })
+      .catch((err) => console.log("HELLO",err));
+  };

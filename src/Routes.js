@@ -6,25 +6,40 @@ import ManageCategories from './admin/ManageCategories';
 import ManageProducts from './admin/ManageProducts';
 import UpdateProduct from './admin/UpdateProduct';
 import AdminRoutes from './auth/helper/AdminRoutes';
+import NannyRoutes from './auth/helper/NannyRoutes';
 import PrivateRoutes from './auth/helper/PrivateRoutes';
+import UserRoute from './auth/helper/UserRoute';
 import Cart from './core/Cart';
 import Home from './core/Home';
+import NannyHome from './core/nannnyHome';
+import OtpVerification from './core/OtpVerification';
 import AdminDashBoard from './user/AdminDashBoard';
+import NannySignup from './user/NannySignup';
 import Signin from './user/Signin';
 import Signup from './user/Signup';
 import UserDashBoard from './user/UserDashBoard';
+import UserOrNanny from './user/UserOrNanny';
 
 const Routers = () => {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" exact element={<Home />} />
+          
+          <Route element={<UserRoute />}>
+            <Route path="/" exact element={<Home />} />
+          </Route>
           <Route path="/signin" exact element={<Signin />} />
-          <Route path="/signup" exact element={<Signup />} />
+          <Route path="/otpVerification" exact element={<OtpVerification />} />
+          <Route path="/signup" exact element={<UserOrNanny />} />
+          <Route path="/user/signup" exact element={<Signup />} />
+          <Route path="/nanny/signup" exact element={<NannySignup />} />
           <Route path="/cart" exact element={<Cart />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/user/dashboard" exact element={<UserDashBoard />} />
+          </Route>
+          <Route element={<NannyRoutes />}>
+            <Route path="/nanny/home" exact element={<NannyHome />} />
           </Route>
           <Route element={<AdminRoutes />}>
             <Route path="/admin/dashboard" exact element={<AdminDashBoard />} />

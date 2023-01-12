@@ -22,11 +22,13 @@ export const processPayment = (userId, token, paymentInfo) => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
+      
     },
+    
     body: JSON.stringify(paymentInfo),
   })
     .then((res) => {
       return res.json();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(JSON.stringify(paymentInfo)));
 };

@@ -7,7 +7,16 @@ import {
   Divider,
   CardFooter,
   ButtonGroup,
+  Input,
   Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
@@ -36,24 +45,52 @@ const ProductCard = ({
     }
   };
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Card maxW="sm" height="100%">
       {getRedirected()}
       <CardBody>
-        <Imagecalls product={product} />
         <Stack mt="6" spacing="3">
           <Heading size="md">{product.name}</Heading>
-          <Text>{product.description}</Text>
+          <Text>
+          EMAIL :- {product.email}
+           </Text>
+          
+
           <Text color="blue.600" fontSize="2xl">
-            {product.price}
+            {product.phone}
           </Text>
         </Stack>
       </CardBody>
       <Divider />
+      <Button mt={2} ml="auto" mr="auto"  width="fit-content" onClick={onOpen}>Click for more details</Button>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{product.name} more details:-</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>{product.experience}</ModalBody>
+          <ModalBody>
+
+          <Input
+                    type={"text"}
+                    placeholder="Message Nanny"
+                  />
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant="ghost" type="submit">Send Message</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <CardFooter>
         {showAddToCart && (
           <Button colorScheme="teal" w="100%" onClick={addToCart}>
-            Add to cart
+            Book Now
           </Button>
         )}
         {showRemoveFromCart && (
@@ -62,7 +99,7 @@ const ProductCard = ({
             w="100%"
             onClick={() => {
               removeProductFromCart(product._id);
-              setReload(!reload)
+              setReload(!reload);
             }}
           >
             Remove From Cart

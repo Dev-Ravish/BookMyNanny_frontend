@@ -43,7 +43,9 @@ const Cart = () => {
             <Heading>NO product in your cart.</Heading>
           )}
         </GridItem>
-        <GridItem><Payment/></GridItem>
+        <GridItem>
+          <Payment products={products} setReload={setReload} retload={reload} />
+        </GridItem>
       </Grid>
     </Base>
   );

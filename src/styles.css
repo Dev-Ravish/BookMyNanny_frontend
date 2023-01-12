@@ -10,10 +10,22 @@ body {
 }
 
 footer {
-
   margin-top: 24px;
   /* position: absolute;
   bottom: 0px;
   right: 0px;
   left: 0px; */
+}
+.row-container {
+  display: flex;
+  width: 100%;
+  background-color: blue;
+  overflow: hidden;
+}
+
+.second-row {
+  flex-grow: 1;
+  border: none;
+  width: 90%;
+  height: 300px;
 }

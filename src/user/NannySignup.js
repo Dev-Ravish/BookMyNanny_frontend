@@ -21,6 +21,7 @@ import {
 import { FaUserAlt, FaLock } from 'react-icons/fa';
 import { signup } from '../auth/helper';
 
+
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 const Signup = () => {
@@ -28,30 +29,51 @@ const Signup = () => {
   const handleShowClick = () => setShowPassword(!showPassword);
 
   const [values, setValues] = useState({
+    // isVerified: false,
     name: '',
     email: '',
     password: '',
     phone: '',
+    experience: '',
     error: false,
     success: false,
-    location:''
+    role: 2,
+    location: '',
   });
-  const { name, email, password, phone, location, error, success } = values;
+  const {
+    // isVerified,
+    name,
+    email,
+    password,
+    phone,
+    location,
+    experience,
+    error,
+    success,
+    role,
+  } = values;
 
   const handleChange = (name) => (event) => {
-    setValues({ ...values, error: false, [name]: event.target.value, success:false });
+    setValues({
+      ...values,
+      error: false,
+      // isVerified: false,
+      [name]: event.target.value,
+      success: false,
+    });
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
-    setValues({ ...values, error: false, success:false });
-    signup({ name, email, password, location, phone })
+    setValues({ ...values, error: false, success: false });
+    signup({ name, email, password, location, role, phone, experience })
       .then((data) => {
         if (data.error) {
           setValues({
             ...values,
             error: data.error,
             success: false,
+            // isVerified:false
           });
         } else {
           setValues({
@@ -59,9 +81,13 @@ const Signup = () => {
             email: '',
             password: '',
             phone: '',
-            location:'',
+            location: '',
+            experience: '',
+            role: 2,
             error: false,
             success: true,
+            // isVerified:false
+
           });
         }
       })
@@ -170,6 +196,16 @@ const Signup = () => {
               </FormControl>
               <FormControl pb={1}>
                 <InputGroup>
+                  <Input
+                    type="text"
+                    placeholder="Do yo have any experience? Brief. More you write, More is the chance of getting in."
+                    onChange={handleChange('experience')}
+                    value={experience}
+                  />
+                </InputGroup>
+              </FormControl>
+              <FormControl pb={1}>
+                <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
                     color="gray.200"
@@ -188,17 +224,36 @@ const Signup = () => {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
-              <Button
-                borderRadius={0}
-                type="submit"
-                variant="solid"
-                colorScheme="teal"
-                width="full"
-                mt={3}
-                onClick={onSubmit}
+              {/* <button
+                type="button"
+                onClick={() => {
+                  setValues({...values, isVerified:true})}}
+                style={{
+                  border: 'none',
+                  background: 'transparent',
+                  outline: 'none',
+                }}
+                
               >
-                Sign Up
-              </Button>
+               <a href='https://dmxs8.authlink.me'> <img
+                alt='click to aunthenticalte yourself'
+                  src="https://otpless-cdn.s3.ap-south-1.amazonaws.com/otpless_button.svg"
+                  style={{ width: '300px' }}
+                /></a>
+              </button> */}
+              {/* {isVerified && ( */}
+                <Button
+                  borderRadius={0}
+                  type="submit"
+                  variant="solid"
+                  colorScheme="teal"
+                  width="full"
+                  mt={3}
+                  onClick={onSubmit}
+                >
+                  Sign Up
+                </Button>
+              {/* )} */}
             </form>
           </Box>
           <Flex>
@@ -212,10 +267,7 @@ const Signup = () => {
     );
   };
   return (
-    <Base
-      title="Signup"
-      description="Sign Up and proceed to see nannies!"
-    >
+    <Base title="Signup" description="Sign Up and proceed to become a nanny!">
       {successMessage()}
       {errorMessage()}
       {/* <p>{JSON.stringify(values)}</p> */}

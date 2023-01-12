@@ -7,33 +7,51 @@ const Navbar = () => {
   return (
     <ChakraProvider>
       <Menu>
-        <Link to="/">
-          <MenuButton
-            as={Button}
-            px={4}
-            my={2}
-            mx={2}
-            borderRadius="md"
-            borderWidth="1px"
-            _hover={{ bg: 'gray.400' }}
-          >
-            Home
-          </MenuButton>
-        </Link>
-
-        <Link to="/cart">
-          <MenuButton
-            as={Button}
-            px={4}
-            my={2}
-            mx={2}
-            borderRadius="md"
-            borderWidth="1px"
-            _hover={{ bg: 'gray.400' }}
-          >
-            cart
-          </MenuButton>
-        </Link>
+        {isAuthenticated() && isAuthenticated().user.role !== 2 && (
+          <Link to="/">
+            <MenuButton
+              as={Button}
+              px={4}
+              my={2}
+              mx={2}
+              borderRadius="md"
+              borderWidth="1px"
+              _hover={{ bg: 'gray.400' }}
+            >
+              Home
+            </MenuButton>
+          </Link>
+        )}
+        {isAuthenticated() && isAuthenticated().user.role === 2 && (
+          <Link to="/nanny/home">
+            <MenuButton
+              as={Button}
+              px={4}
+              my={2}
+              mx={2}
+              borderRadius="md"
+              borderWidth="1px"
+              _hover={{ bg: 'gray.400' }}
+            >
+              N. Home
+            </MenuButton>
+          </Link>
+        )}
+        {isAuthenticated() && isAuthenticated().user.role !== 2 && (
+          <Link to="/cart">
+            <MenuButton
+              as={Button}
+              px={4}
+              my={2}
+              mx={2}
+              borderRadius="md"
+              borderWidth="1px"
+              _hover={{ bg: 'gray.400' }}
+            >
+              cart
+            </MenuButton>
+          </Link>
+        )}
 
         <Link to="/user/dashboard">
           <MenuButton
@@ -49,19 +67,21 @@ const Navbar = () => {
           </MenuButton>
         </Link>
 
-        {isAuthenticated() && isAuthenticated().user.role === 1 && <Link to="/admin/dashboard">
-          <MenuButton
-            as={Button}
-            px={4}
-            my={2}
-            mx={2}
-            borderRadius="md"
-            borderWidth="1px"
-            _hover={{ bg: 'gray.400' }}
-          >
-            A. dashboard
-          </MenuButton>
-        </Link>}
+        {isAuthenticated() && isAuthenticated().user.role === 1 && (
+          <Link to="/admin/dashboard">
+            <MenuButton
+              as={Button}
+              px={4}
+              my={2}
+              mx={2}
+              borderRadius="md"
+              borderWidth="1px"
+              _hover={{ bg: 'gray.400' }}
+            >
+              A. dashboard
+            </MenuButton>
+          </Link>
+        )}
         {!isAuthenticated() && (
           <Fragment>
             <Link to="/signin">

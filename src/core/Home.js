@@ -8,36 +8,41 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import ProductCard from './ProductCard';
-import { getProducts } from './helper/coreapicalls';
+import { getNannies } from './helper/coreapicalls';
+import { isAuthenticated } from '../auth/helper';
+
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
+  const [nannies, setNannies] = useState([]);
   const [error, setError] = useState(false);
 
-  const loadProducts = () => {
-    getProducts().then((data) => {
+  const loadNannies = () => {
+    getNannies().then((data) => {
       if (data.error) {
         setError(data.error);
       } else {
-        setProducts(data);
+        setNannies(data);
       }
     });
   };
   useEffect(() => {
-    loadProducts();
+    loadNannies();
   }, []);
 
   return (
     <ChakraProvider>
       <Base title="Home Page" description="Welcome to our Home Page!">
-        <Heading ml={8}>All Products:</Heading>
+        <Heading ml={8}>Nannies Near You:</Heading>
         <Grid templateColumns={{ md: 'repeat(4, 1fr)' }} py={3}>
-          {products.map((product, index) => {
+          {
+            nannies.map((nanny, index) => {
+            if(isAuthenticated().user.location === nanny.location){
             return (
               <GridItem key={index} w="90%" align="center" ml="auto" mr="auto">
-                <ProductCard product={product} />
+                <ProductCard product={nanny} />
               </GridItem>
-            );
+            
+            );}
           })}
         </Grid>
       </Base>
